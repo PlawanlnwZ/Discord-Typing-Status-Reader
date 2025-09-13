@@ -10,16 +10,17 @@ function log(msg) {
     logEl.textContent = `[${ts}] ${msg}\n` + logEl.textContent;
 }
 
-// Auto-set region when app opens
-const LEFT = 450;
-const TOP = 900;
-const WIDTH = 900;
-const HEIGHT = 50;
+// Default preset region
+const DEFAULT_LEFT = 450;
+const DEFAULT_TOP = 900;
+const DEFAULT_WIDTH = 900;
+const DEFAULT_HEIGHT = 50;
 
-document.getElementById('left').value = LEFT;
-document.getElementById('top').value = TOP;
-document.getElementById('width').value = WIDTH;
-document.getElementById('height').value = HEIGHT;
+// Fill inputs with default values on first load
+document.getElementById('left').value = DEFAULT_LEFT;
+document.getElementById('top').value = DEFAULT_TOP;
+document.getElementById('width').value = DEFAULT_WIDTH;
+document.getElementById('height').value = DEFAULT_HEIGHT;
 
 // Helper to enable/disable buttons
 function setButtons(running) {
@@ -29,9 +30,14 @@ function setButtons(running) {
 
 // Start detection
 function startDetection() {
+    const left = parseInt(document.getElementById('left').value, 10);
+    const top = parseInt(document.getElementById('top').value, 10);
+    const width = parseInt(document.getElementById('width').value, 10);
+    const height = parseInt(document.getElementById('height').value, 10);
     const intervalMs = 800;
-    window.electronAPI.startDetection({ left: LEFT, top: TOP, width: WIDTH, height: HEIGHT }, intervalMs);
-    log('Auto detection started with preset region.');
+
+    window.electronAPI.startDetection({ left, top, width, height }, intervalMs);
+    log(`Detection started at Left=${left}, Top=${top}, Width=${width}, Height=${height}`);
     setButtons(true);
 }
 
@@ -46,7 +52,7 @@ function stopDetection() {
 startBtn.addEventListener('click', startDetection);
 stopBtn.addEventListener('click', stopDetection);
 
-// Start automatically on app load
+// Auto-start on load with default region
 window.addEventListener('DOMContentLoaded', () => {
     startDetection();
 });
