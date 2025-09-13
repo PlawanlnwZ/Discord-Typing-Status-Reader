@@ -1,0 +1,14 @@
+{
+  "name": "discord-typing-detector-electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^38.1.0",
+    "screenshot-desktop": "^1.15.0",
+    "sharp": "^0.33.0",
+    "tesseract.js": "^5.1.0"
+  }
+}
